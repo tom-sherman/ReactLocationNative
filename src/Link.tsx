@@ -11,6 +11,10 @@ export interface LinkProps<TGenerics>
 	title: string;
 }
 
+/**
+ * Quick and dirty Link implementation.
+ * Doesn't support active/inactive features or preloading.
+ */
 export function Link<
 	TGenerics extends Partial<DefaultGenerics> = DefaultGenerics
 >(props: LinkProps<TGenerics>) {

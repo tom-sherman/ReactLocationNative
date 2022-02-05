@@ -75,8 +75,8 @@ const App = () => {
 						},
 					]}
 				>
-					<Link to="/" title="Home" getActiveProps={getActiveProps} />
-					<Link to="posts" title="Posts" getActiveProps={getActiveProps} />
+					<Link to="/" title="Home" />
+					<Link to="posts" title="Posts" />
 					<View style={styles.sectionContainer}>
 						<Outlet />
 					</View>
@@ -105,11 +105,7 @@ function Posts() {
 				{posts?.map((post) => {
 					return (
 						<View key={post.id}>
-							<Link
-								to={post.id}
-								title={post.title}
-								getActiveProps={getActiveProps}
-							/>
+							<Link to={post.id} title={post.title} />
 						</View>
 					);
 				})}
@@ -149,14 +145,6 @@ function Post() {
 
 function Hr() {
 	return <View style={styles.hr} />;
-}
-
-function getActiveProps() {
-	return {
-		style: {
-			fontWeight: "bold",
-		},
-	};
 }
 
 const styles = StyleSheet.create({
