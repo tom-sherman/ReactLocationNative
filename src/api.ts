@@ -2,8 +2,7 @@ export async function fetchPosts() {
 	await new Promise((r) => setTimeout(r, 300));
 	return await fetch("https://jsonplaceholder.typicode.com/posts")
 		.then((res) => res.json())
-		.then((r) => r.slice(0, 5))
-		.then(() => Promise.reject(new Error("Some error")));
+		.then((r) => r.slice(0, 5));
 }
 
 export async function fetchPostById(postId: string) {
