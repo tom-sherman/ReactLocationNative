@@ -18,6 +18,7 @@ import {
 } from "@tanstack/react-location";
 import { Link } from "./Link";
 import { fetchPostById, fetchPosts } from "./api";
+import { ErrorBoundary } from "react-error-boundary";
 
 type PostType = {
 	id: string;
@@ -43,42 +44,44 @@ const App = () => {
 	};
 
 	return (
-		<Router
-			location={reactLocation}
-			useErrorBoundary
-			routes={[
-				{ path: "/", element: <Index /> },
-				{
-					path: "posts",
-					element: <Posts />,
-					loader: async () => {
-						return {
-							posts: await fetchPosts(),
-						};
-					},
-					children: [
-						{ path: "/", element: <PostsIndex /> },
+		<SafeAreaView style={backgroundStyle}>
+			<ErrorBoundary fallback={<Text>An error occured...</Text>}>
+				<Router
+					location={reactLocation}
+					useErrorBoundary
+					routes={[
+						{ path: "/", element: <Index /> },
 						{
-							path: ":postId",
-							element: <Post />,
-							loader: async ({ params: { postId } }) => {
+							path: "posts",
+							element: <Posts />,
+							loader: async () => {
 								return {
-									post: await fetchPostById(postId),
+									posts: await fetchPosts(),
 								};
 							},
+							children: [
+								{ path: "/", element: <PostsIndex /> },
+								{
+									path: ":postId",
+									element: <Post />,
+									loader: async ({ params: { postId } }) => {
+										return {
+											post: await fetchPostById(postId),
+										};
+									},
+								},
+							],
 						},
-					],
-				},
-			]}
-		>
-			<SafeAreaView style={backgroundStyle}>
-				<Link to="/" title="Home" getActiveProps={getActiveProps} />
-				<Link to="posts" title="Posts" getActiveProps={getActiveProps} />
-				<View style={styles.sectionContainer}>
-					<Outlet />
-				</View>
-			</SafeAreaView>
-		</Router>
+					]}
+				>
+					<Link to="/" title="Home" getActiveProps={getActiveProps} />
+					<Link to="posts" title="Posts" getActiveProps={getActiveProps} />
+					<View style={styles.sectionContainer}>
+						<Outlet />
+					</View>
+				</Router>
+			</ErrorBoundary>
+		</SafeAreaView>
 	);
 };
 

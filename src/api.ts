@@ -1,14 +1,15 @@
 export async function fetchPosts() {
-  await new Promise(r => setTimeout(r, 300));
-  return await fetch('https://jsonplaceholder.typicode.com/posts')
-    .then(res => res.json())
-    .then(r => r.slice(0, 5));
+	await new Promise((r) => setTimeout(r, 300));
+	return await fetch("https://jsonplaceholder.typicode.com/posts")
+		.then((res) => res.json())
+		.then((r) => r.slice(0, 5))
+		.then(() => Promise.reject(new Error("Some error")));
 }
 
 export async function fetchPostById(postId: string) {
-  await new Promise(r => setTimeout(r, 300));
+	await new Promise((r) => setTimeout(r, 300));
 
-  return await fetch(
-    `https://jsonplaceholder.typicode.com/posts/${postId}`,
-  ).then(res => res.json());
+	return await fetch(
+		`https://jsonplaceholder.typicode.com/posts/${postId}`
+	).then((res) => res.json());
 }
