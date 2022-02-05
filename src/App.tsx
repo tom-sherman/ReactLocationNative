@@ -48,6 +48,7 @@ const App = () => {
 			<ErrorBoundary fallback={<Text>An error occured...</Text>}>
 				<Router
 					location={reactLocation}
+					// useErrorBoundary is required as react-location has built in error rendering in dev nide that uses DOM elements
 					useErrorBoundary
 					routes={[
 						{ path: "/", element: <Index /> },
